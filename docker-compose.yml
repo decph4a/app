@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  front:
+    container_name: decph4a-front
+    build:
+      context: ./
+      dockerfile: ./docker/front/Dockerfile
+  back:
+    container_name: decph4a-back
+    build:
+      context: ./
+      dockerfile: ./docker/back/Dockerfile
+  db:
+    container_name: decph4a-db
+    build:
+      context: ./
+      dockerfile: ./docker/db/Dockerfile

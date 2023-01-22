@@ -9,6 +9,8 @@ services:
       - ./src:/workspace
     working_dir: /workspace
     command: yarn dev
+    ports:
+      - '3000:3000'
   postgres-data:
     container_name: decph4-db-data
     image: busybox

@@ -5,13 +5,22 @@ services:
     build:
       context: ./
       dockerfile: ./docker/front/Dockerfile
-  back:
-    container_name: decph4a-back
-    build:
-      context: ./
-      dockerfile: ./docker/back/Dockerfile
+    volumes:
+      - ./src:/workspace
+    working_dir: /workspace
+    command: yarn dev
+  postgres-data:
+    container_name: decph4-db-data
+    image: busybox
+    volumes:
+      - ./docker/dbdata:/var/lib/postgresql
   db:
-    container_name: decph4a-db
-    build:
-      context: ./
-      dockerfile: ./docker/db/Dockerfile
+    container_name: decph4-db
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
+    volumes_from:
+      - postgres-data

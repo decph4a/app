@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  front:
+    container_name: decph4a-front
+    build:
+      context: ./
+      dockerfile: ./docker/front/Dockerfile
+    volumes:
+      - ./src:/workspace
+    working_dir: /workspace
+    command: yarn dev
+    ports:
+      - '3000:3000'
+  back:
+    container_name: decph4-back
+    build:
+      context: ./
+      dockerfile: ./docker/back/Dockerfile
+    volumes:
+      - ./app:/workspace
+    working_dir: /workspace
+    command: go run main.go
+    ports:
+      - '8000:8000'
+  postgres-data:
+    container_name: decph4-db-data
+    image: busybox
+    volumes:
+      - ./docker/dbdata:/var/lib/postgresql
+  db:
+    container_name: decph4-db
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
+    volumes_from:
+      - postgres-data

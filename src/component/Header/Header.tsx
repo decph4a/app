@@ -1,4 +1,4 @@
-import { chakra, Container, Heading } from '@chakra-ui/react'
+import { Button, chakra, Container, Heading } from '@chakra-ui/react'
 import { useAuthContext } from 'feature/auth/provider/AuthProvider'
 
 export const Header = () => {
@@ -7,7 +7,11 @@ export const Header = () => {
         <chakra.header py={4} bgColor={'blue.600'}>
             <Container maxW={'container.lg'}>
                 <Heading color={'white'}>
-                    {user ? 'ログイン中' : 'ログアウト中'}
+                    {user ? (
+                        <Button colorScheme={'teal'}>サインアウト</Button>
+                    ) : (
+                        'ログアウト中'
+                    )}
                 </Heading>
             </Container>
         </chakra.header>

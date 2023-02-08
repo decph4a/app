@@ -1,12 +1,11 @@
-import { Stack, Text } from "@chakra-ui/react"
-
+import type { NextPage } from 'next'
+import { Heading } from '@chakra-ui/react'
+import { AuthGuard } from 'feature/auth/component/AuthGuard/AuthGuard'
 const Index = () => {
     return (
-        <>
-            <Stack>
-                <Text>Hello</Text>
-            </Stack>
-        </>
+        <AuthGuard>
+            <Heading>Chakra UI</Heading>
+        </AuthGuard >
     )
 }
 

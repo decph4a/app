@@ -15,8 +15,8 @@ import {
 import { useAuthContext } from 'feature/auth/provider/AuthProvider'
 import { FirebaseError } from '@firebase/util'
 import { getAuth, signOut } from 'firebase/auth'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+import { Navigate } from 'component/Navigate/Navigate'
+import { useRouter } from 'hooks/useRouter/useRouter'
 
 export const Header = () => {
     const { user } = useAuthContext()
@@ -32,7 +32,7 @@ export const Header = () => {
                 status: 'success',
                 position: 'top',
             })
-            push('/signin')
+            push((path) => path.signin.$url())
         } catch (e) {
             if (e instanceof FirebaseError) {
                 console.log(e)
@@ -44,15 +44,15 @@ export const Header = () => {
         <chakra.header py={4} bgColor={'blue.600'}>
             <Container maxW={'container.lg'}>
                 <Flex>
-                    <Link href={'/'} passHref>
+                    <Navigate href={(path) => path.$url()}>
                         <chakra.a
                             _hover={{
                                 opacity: 0.8,
                             }}
                         >
-                            <Heading color={'white'}>Firebase Realtime Chat</Heading>
+                            <Heading color={'white'}>Catapult</Heading>
                         </chakra.a>
-                    </Link>
+                    </Navigate>
                     <Spacer aria-hidden />
                     {user ? (
                         <Menu>
@@ -64,11 +64,11 @@ export const Header = () => {
                             </MenuList>
                         </Menu>
                     ) : (
-                        <Link href={'/signin'} passHref>
+                        <Navigate href={(path) => path.signin.$url()}>
                             <Button as={'a'} colorScheme={'teal'}>
                                 サインイン
                             </Button>
-                        </Link>
+                        </Navigate>
                     )}
                 </Flex>
             </Container >

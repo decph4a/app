@@ -10,7 +10,7 @@ import {
     Spacer,
     Text,
 } from '@chakra-ui/react'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { getDatabase, onChildAdded, push, ref } from '@firebase/database'
 import { FirebaseError } from '@firebase/util'
 import { AuthGuard } from 'feature/auth/component/AuthGuard/AuthGuard'
@@ -36,6 +36,7 @@ const Message = ({ message }: MessageProps) => {
 }
 
 export const Page = () => {
+    const messagesElementRef = useRef<HTMLDivElement | null>(null)
     const [message, setMessage] = useState<string>('')
 
     const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
@@ -71,12 +72,25 @@ export const Page = () => {
         }
 
     }, [])
+
+    useEffect(() => {
+        messagesElementRef.current?.scrollTo({
+            top: messagesElementRef.current.scrollHeight,
+        })
+    }, [chats])
+
     return (
         <AuthGuard>
             <Container py={14}>
                 <Heading>チャット</Heading>
                 <Spacer height={4} aria-hidden />
-                <Flex flexDirection={'column'} overflowY={'auto'} gap={2} height={400}>
+                <Flex
+                    flexDirection={'column'}
+                    overflowY={'auto'}
+                    gap={2}
+                    height={400}
+                    ref={messagesElementRef}
+                >
                     {chats.map((chat, index) => (
                         <Message message={chat.message} key={`ChatMessage_${index}`} />
                     ))}

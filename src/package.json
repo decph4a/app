@@ -3,10 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "run-p dev:* watch:*",
+    "dev:next": "next dev",
+    "build": "run-s generate:path build:next",
+    "build:next": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "run-p lint:*",
+    "lint:next": "next lint . --ignore-path .prettierignore --max-warnings 0",
+    "lint:prettier": "prettier --check .",
+    "lint:typecheck": "tsc --pretty --noEmit",
+    "format": "run-s format:eslint format:prettier",
+    "format:eslint": "yarn lint:next --fix",
+    "format:prettier": "yarn lint:prettier --write",
+    "watch:path": "pathpida --ignorePath .gitignore --output lib/pathpida --watch",
+    "generate:path": "pathpida --ignorePath .gitignore --output lib/pathpida"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.9",
@@ -19,11 +29,14 @@
     "firebase": "^9.17.1",
     "framer-motion": "^8.5.0",
     "next": "13.1.4",
+    "pathpida": "^0.20.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.4"
   },
   "devDependencies": {
-    "@tsconfig/strictest": "^1.0.2"
+    "@tsconfig/strictest": "^1.0.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.4"
   }
 }

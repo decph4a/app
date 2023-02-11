@@ -15,7 +15,7 @@ const Chat = () => {
 export default function Sidebar() {
     return (
         <Flex
-            w="300px" h="100vh"
+            w="300px"
             borderEnd="1px solid" borderColor="gray.200"
             direction="column"
         >
@@ -25,7 +25,9 @@ export default function Sidebar() {
                 borderBottom="1px solid" borderColor="gray.200"
                 p={3}
             >
-                <Flex>
+                <Flex
+                    align="center"
+                >
                     <Avatar src=" " marginEnd={3} />
                     <Text>hoge</Text>
                 </Flex>
@@ -34,10 +36,10 @@ export default function Sidebar() {
             </Flex>
 
             <Button m={5} p={4}>New Chat</Button>
-            <Flex overflowX="scroll" direction="column" sx={{ scrollbarwidth: "none" }}>
+            <Flex overflowX="scroll" direction="column" sx={{ scrollbarwidth: "none" }} flex={1}>
                 <Chat />
             </Flex>
 
-        </Flex>
+        </Flex >
     )
 }

@@ -11,11 +11,14 @@ import {
     Input,
     Spacer,
     useToast,
+    Link
 } from '@chakra-ui/react'
 import { FormEvent, useState } from 'react'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
 import { useRouter } from 'hooks/useRouter/useRouter'
+import { Navigate } from 'component/Navigate/Navigate'
+
 
 export const Page = () => {
     const [email, setEmail] = useState<string>('')
@@ -91,6 +94,9 @@ export const Page = () => {
                     </Button>
                 </Center>
             </chakra.form>
+            <Navigate href={(path) => path.signup.$url()}>
+                <Link lineHeight={1}>登録してない人はこちら</Link>
+            </Navigate>
         </Container>
     )
 }

@@ -17,6 +17,7 @@ const Chat = () => {
 export default function Sidebar() {
     return (
         <Flex
+            h="100%"
             w="300px"
             borderEnd="1px solid" borderColor="gray.200"
             direction="column"

@@ -1,89 +1,128 @@
+import {
+    Avatar,
+    Box,
+    Button,
+    chakra,
+    Container,
+    Flex,
+    Heading,
+    Input,
+    Spacer,
+    Text,
+} from '@chakra-ui/react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
+import { getDatabase, onChildAdded, push, ref } from '@firebase/database'
+import { FirebaseError } from '@firebase/util'
+import { AuthGuard } from 'feature/auth/component/AuthGuard/AuthGuard'
 import Sidebar from 'component/Sidebar/Sidebar'
-import { Flex, Heading, } from "@chakra-ui/layout"
-import { Avatar } from "@chakra-ui/avatar"
-import { Input, Button, Text } from "@chakra-ui/react"
-const Topbar = () => {
+import { Footer } from 'component/Footer/Footer'
+import { Header } from 'component/Header/Header'
+
+const _message = '確認用メッセージです。'
+const _messages = [...Array(10)].map((_, i) => _message.repeat(i + 1))
+
+type MessageProps = {
+    message: string
+}
+
+const Message = ({ message }: MessageProps) => {
     return (
-        <Flex
-            bg="gray.100"
-            h="81px" w="100%"
-            align="center"
-            p={5}
-        >
-            <Avatar src="" marginEnd={3} />
-            <Heading size="lg">hogehoge@gmail</Heading>
+        <Flex alignItems={'start'}>
+            <Avatar />
+            <Box ml={2}>
+                <Text bgColor={'gray.200'} rounded={'md'} px={2} py={1}>
+                    {message}
+                </Text>
+            </Box>
         </Flex>
     )
 }
 
-const Bottombar = () => {
-    return (
-        <Flex
-            p={3}
-        >
-            <Input placeholder="メッセージを入力" />
-        </Flex>
-    )
+export const Page = () => {
+    const messagesElementRef = useRef<HTMLDivElement | null>(null)
+    const [message, setMessage] = useState<string>('')
 
-}
-export default function Chat() {
-    return (
+    const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        try {
+            const db = getDatabase()
+            const dbRef = ref(db, 'chat')
+            await push(dbRef, {
+                message,
+            })
+            setMessage('')
+        } catch (e) {
+            if (e instanceof FirebaseError) {
+                console.log(e)
+            }
+        }
+    }
+    const [chats, setChats] = useState<{ message: string }[]>([])
 
-        <Flex
-            h="100vh"
-        >
-            <Sidebar />
+    useEffect(() => {
+        try {
+            const db = getDatabase()
+            const dbRef = ref(db, 'chat')
+            return onChildAdded(dbRef, (snapshot) => {
+                const message = String(snapshot.val()['message'] ?? '')
+                setChats((prev) => [...prev, { message }])
+            })
+        } catch (e) {
+            if (e instanceof FirebaseError) {
+                console.error(e)
+            }
+            return
+        }
+
+    }, [])
+
+    useEffect(() => {
+        messagesElementRef.current?.scrollTo({
+            top: messagesElementRef.current.scrollHeight,
+        })
+    }, [chats])
+
+    return (
+        <AuthGuard>
             <Flex
-                flex={1}
-                direction="column"
+                minHeight={'100vh'}
+                flexDirection={'column'}
+                overflowY={'auto'}
+                gap={2}
+                ref={messagesElementRef}
             >
-                <Topbar />
-                <Flex flex={1} direction="column" pt={4} mx={5} overflowX="scroll" sx={{ scrollbarWidth: "none" }}>
-                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
+
+                <Header />
+                <Container
+                    py={14}
+                    flex={1}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    minHeight={0}
+                >
+                    <Heading>チャット</Heading>
+                    <Spacer flex={'none'} height={4} aria-hidden />
+                    <Flex
+                        flexDirection={'column'}
+                        overflowY={'auto'}
+                        gap={2}
+                        ref={messagesElementRef}
+                    >
+                        {chats.map((chat, index) => (
+                            <Message message={chat.message} key={`ChatMessage_${index}`} />
+                        ))}
                     </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>                    <Flex bg="blue.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1}>
-                        <Text>ダミー</Text>
-                    </Flex>
-                    <Flex bg="green.100" w="fit-content" minWidth="100px" borderRadius="lg" p={3} m={1} alignSelf="flex-end">
-                        <Text>ダミー</Text>
-                    </Flex>
-                </Flex>
-                <Bottombar />
+                    <Spacer aria-hidden />
+                    <Spacer height={2} aria-hidden flex={'none'} />
+                    <chakra.form display={'flex'} gap={2} onSubmit={handleSendMessage}>
+                        <Input value={message} onChange={(e) => setMessage(e.target.value)} />
+                        <Button type={'submit'}>送信</Button>
+                    </chakra.form>
+                </Container>
+                <Footer />
             </Flex>
-        </Flex>
+        </AuthGuard>
     )
 }
+
+export default Page

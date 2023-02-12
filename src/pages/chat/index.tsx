@@ -14,6 +14,9 @@ import { FormEvent, useEffect, useRef, useState } from 'react'
 import { getDatabase, onChildAdded, push, ref } from '@firebase/database'
 import { FirebaseError } from '@firebase/util'
 import { AuthGuard } from 'feature/auth/component/AuthGuard/AuthGuard'
+import Sidebar from 'component/Sidebar/Sidebar'
+import { Footer } from 'component/Footer/Footer'
+import { Header } from 'component/Header/Header'
 
 const _message = '確認用メッセージです。'
 const _messages = [...Array(10)].map((_, i) => _message.repeat(i + 1))
@@ -81,32 +84,43 @@ export const Page = () => {
 
     return (
         <AuthGuard>
-            <Container
-                py={14}
-                flex={1}
-                display={'flex'}
+            <Flex
+                minHeight={'100vh'}
                 flexDirection={'column'}
-                minHeight={0}
+                overflowY={'auto'}
+                gap={2}
+                ref={messagesElementRef}
             >
-                <Heading>チャット</Heading>
-                <Spacer flex={'none'} height={4} aria-hidden />
-                <Flex
+
+                <Header />
+                <Container
+                    py={14}
+                    flex={1}
+                    display={'flex'}
                     flexDirection={'column'}
-                    overflowY={'auto'}
-                    gap={2}
-                    ref={messagesElementRef}
+                    minHeight={0}
                 >
-                    {chats.map((chat, index) => (
-                        <Message message={chat.message} key={`ChatMessage_${index}`} />
-                    ))}
-                </Flex>
-                <Spacer aria-hidden />
-                <Spacer height={2} aria-hidden flex={'none'} />
-                <chakra.form display={'flex'} gap={2} onSubmit={handleSendMessage}>
-                    <Input value={message} onChange={(e) => setMessage(e.target.value)} />
-                    <Button type={'submit'}>送信</Button>
-                </chakra.form>
-            </Container>
+                    <Heading>チャット</Heading>
+                    <Spacer flex={'none'} height={4} aria-hidden />
+                    <Flex
+                        flexDirection={'column'}
+                        overflowY={'auto'}
+                        gap={2}
+                        ref={messagesElementRef}
+                    >
+                        {chats.map((chat, index) => (
+                            <Message message={chat.message} key={`ChatMessage_${index}`} />
+                        ))}
+                    </Flex>
+                    <Spacer aria-hidden />
+                    <Spacer height={2} aria-hidden flex={'none'} />
+                    <chakra.form display={'flex'} gap={2} onSubmit={handleSendMessage}>
+                        <Input value={message} onChange={(e) => setMessage(e.target.value)} />
+                        <Button type={'submit'}>送信</Button>
+                    </chakra.form>
+                </Container>
+                <Footer />
+            </Flex>
         </AuthGuard>
     )
 }

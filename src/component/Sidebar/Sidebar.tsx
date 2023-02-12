@@ -3,6 +3,8 @@ import { Button } from "@chakra-ui/react"
 import { IconButton } from "@chakra-ui/button"
 import { Avatar } from "@chakra-ui/avatar"
 import { ArrowLeftIcon } from "@chakra-ui/icons"
+import { signOut } from 'firebase/auth'
+import { auth } from 'lib/firebase/firebase'
 
 const Chat = () => {
     return (
@@ -32,7 +34,7 @@ export default function Sidebar() {
                     <Text>hoge</Text>
                 </Flex>
 
-                <IconButton aria-label='Search database' size="sm" isRound icon={<ArrowLeftIcon />} />
+                <IconButton aria-label='Search database' size="sm" isRound icon={<ArrowLeftIcon />} onClick={() => signOut(auth)} />
             </Flex>
 
             <Button m={5} p={4}>New Chat</Button>

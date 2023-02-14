@@ -21,7 +21,7 @@ import {
 } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
 import { useRouter } from 'hooks/useRouter/useRouter'
-import { Navigate } from 'component/Navigate/Navigate'
+import { Navigate } from 'components/Navigate/Navigate'
 
 export const Page = () => {
     const [email, setEmail] = useState<string>('')

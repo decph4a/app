@@ -15,7 +15,7 @@ import {
 import { useAuthContext } from 'feature/auth/provider/AuthProvider'
 import { FirebaseError } from '@firebase/util'
 import { getAuth, signOut } from 'firebase/auth'
-import { Navigate } from 'component/Navigate/Navigate'
+import { Navigate } from 'components/Navigate/Navigate'
 import { useRouter } from 'hooks/useRouter/useRouter'
 
 export const Header = () => {

@@ -1,5 +1,5 @@
 import { chakra, Container, Flex, Link } from '@chakra-ui/react'
-import { Navigate } from 'component/Navigate/Navigate'
+import { Navigate } from 'components/Navigate/Navigate'
 
 export const Footer = () => {
     return (

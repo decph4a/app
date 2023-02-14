@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Navigate } from 'component/Navigate/Navigate'
+import { Navigate } from 'components/Navigate/Navigate'
 import { Link, ChakraProvider, Center, Box, Stack, Button } from '@chakra-ui/react'
 import { ChatIcon } from "@chakra-ui/icons"
 

@@ -32,7 +32,7 @@ export default function Login() {
                     >
                         <ChatIcon w="100px" h="100px" color="white" />
                     </Box>
-                    <Button boxShadow="md" onClick={() => signInWithGoogle("", { prompt: "select_account" })} >Sign in</Button>
+                    <Button boxShadow="md" onClick={() => signInWithGoogle(undefined, { prompt: "select_account" })} >Sign in</Button>
                 </Stack>
             </Center>
         </>

@@ -44,7 +44,7 @@ export const Header = () => {
         <chakra.header py={4} bgColor={'blue.600'}>
             <Container maxW={'container.lg'}>
                 <Flex>
-                    <Navigate href={(path) => path.$url()}>
+                    <Navigate href={(path) => path.dashboard.$url()}>
                         <chakra.a
                             _hover={{
                                 opacity: 0.8,
@@ -64,7 +64,7 @@ export const Header = () => {
                             </MenuList>
                         </Menu>
                     ) : (
-                        <Navigate href={(path) => path.signin.$url()}>
+                        <Navigate href={(path) => path.$url()}>
                             <Button as={'a'} colorScheme={'teal'}>
                                 サインイン
                             </Button>

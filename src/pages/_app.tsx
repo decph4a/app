@@ -8,7 +8,6 @@ import { theme } from 'lib/chakra/theme'
 
 initializeFirebaseApp()
 export default function App({ Component, pageProps }: AppProps) {
-    console.log(getApp())
     return (
         <ChakraProvider theme={theme}>
             <AuthProvider>

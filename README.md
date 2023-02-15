@@ -18,3 +18,8 @@ NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID=
 NEXT_PUBLIC_FIREBASE_APP_ID=
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=
 ```
+
+# 改善のためのサイト
+https://www.npmjs.com/package/react-firebase-hooks
+
+https://github.com/CSFrequency/react-firebase-hooks

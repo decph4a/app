@@ -16,16 +16,6 @@ interface Chat {
     users: string[];
     [key: string]: any;
 }
-interface User {
-    email: string | null;
-}
-function displayEmail(user: User | null | undefined) {
-    if (user && user.email != null) {
-        console.log(user.email);
-    } else {
-        console.log("Email not available");
-    }
-}
 
 const Sidebar: React.FC = () => {
     const [user, loading, error] = useAuthState(auth);

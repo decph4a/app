@@ -9,7 +9,7 @@ export const Footer = () => {
                     <Navigate href={(path) => path.dashboard.$url()}>
                         <Link lineHeight={1}>ダッシュボード</Link>
                     </Navigate>
-                    <Navigate href={(path) => path.chat.$url()}>
+                    <Navigate href={(path) => path.$url()}>
                         <Link lineHeight={1}>チャット</Link>
                     </Navigate>
                 </Flex>

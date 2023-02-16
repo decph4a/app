@@ -15,8 +15,8 @@ import { getDatabase, onChildAdded, push, ref } from '@firebase/database'
 import { FirebaseError } from '@firebase/util'
 import { AuthGuard } from 'feature/auth/component/AuthGuard/AuthGuard'
 import Sidebar from 'components/Sidebar'
-import { Footer } from 'components/Footer/Footer'
-import { Header } from 'components/Header/Header'
+import { Footer } from 'components/Footer'
+import { Header } from 'components/Header'
 
 const _message = '確認用メッセージです。'
 const _messages = [...Array(10)].map((_, i) => _message.repeat(i + 1))

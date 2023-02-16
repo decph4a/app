@@ -4,15 +4,22 @@ import Sidebar from "components/Sidebar"
 import { useRouter } from "next/router"
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore'
 import { db, auth } from 'lib/firebase/firebase'
-import { collection, doc, orderBy, query } from "firebase/firestore"
+import { addDoc, collection, doc, orderBy, query, Query, serverTimestamp } from "firebase/firestore"
 import { useAuthState } from 'react-firebase-hooks/auth'
 import getOtherEmail from 'utils/getOtherEmail'
-
+import { useState } from "react"
+import { async } from "@firebase/util"
+import firebase from 'firebase/app';
+import { User } from 'firebase/auth';
 type Message = {
     sender: string;
     text: string;
     timestamp: number;
 };
+interface BottombarProps {
+    id: string;
+    user: User | null | undefined;
+}
 
 const Topbar = ({ email }: { email: string }) => {
     return (
@@ -27,12 +34,25 @@ const Topbar = ({ email }: { email: string }) => {
     )
 }
 
-const Bottombar = () => {
+const Bottombar = ({ id, user }: BottombarProps) => {
+    const [input, setInput] = useState('');
+
+    const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        await addDoc(collection(db, `chats/${id}/messages`), {
+            text: input,
+            sender: user && user.email,
+            timestamp: serverTimestamp()
+        });
+    };
+
     return (
-        <FormControl>
-            <Input placeholder="入力" autoComplete="off" />
-            <Button type="submit" hidden>送信</Button>
-        </FormControl>
+        <form onSubmit={sendMessage}>
+            <FormControl p={3} as="div">
+                <Input placeholder="入力" autoComplete="off" onChange={e => setInput(e.target.value)} value={input} />
+                <Button type="submit" hidden>送信</Button>
+            </FormControl>
+        </form>
     )
 }
 
@@ -43,6 +63,7 @@ export default function Chat() {
 
     const q = query(collection(db, `chats/${id}/message`), orderBy("timestamp"))
     const [message] = useCollectionData<Message>(q, { idField: 'id' });
+
 
     const [chat] = useDocumentData(doc(db, "chats", id.toString()))
 
@@ -74,7 +95,7 @@ export default function Chat() {
                 <Flex direction="column" flex={1} overflowY="scroll">
                     {getMessages()}
                 </Flex>
-                <Bottombar />
+                <Bottombar id={id} user={user} />
             </Flex>
         </Flex>
     )

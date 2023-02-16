@@ -14,9 +14,9 @@ import { FormEvent, useEffect, useRef, useState } from 'react'
 import { getDatabase, onChildAdded, push, ref } from '@firebase/database'
 import { FirebaseError } from '@firebase/util'
 import { AuthGuard } from 'feature/auth/component/AuthGuard/AuthGuard'
-import Sidebar from 'component/Sidebar/Sidebar'
-import { Footer } from 'component/Footer/Footer'
-import { Header } from 'component/Header/Header'
+import Sidebar from 'components/Sidebar'
+import { Footer } from 'components/Footer'
+import { Header } from 'components/Header'
 
 const _message = '確認用メッセージです。'
 const _messages = [...Array(10)].map((_, i) => _message.repeat(i + 1))

@@ -1,7 +1,7 @@
-import { Footer } from 'component/Footer/Footer'
-import { Header } from 'component/Header/Header'
+import { Footer } from 'components/Footer'
+import { Header } from 'components/Header'
 
-const Index = () => {
+const Dashboard = () => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
             <Header />
@@ -10,4 +10,4 @@ const Index = () => {
         </div>
     )
 }
-export default Index
+export default Dashboard

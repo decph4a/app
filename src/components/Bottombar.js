@@ -21,7 +21,7 @@ export default function Bottombar({ id, user }) {
             onSubmit={sendMessage}
             as="form"
         >
-            <Input placeholder="Type a message..." autoComplete="off" onChange={e => setInput(e.target.value)} value={input} />
+            <Input placeholder="メッセージを入力" autoComplete="off" onChange={e => setInput(e.target.value)} value={input} />
             <Button type="submit" hidden>Submit</Button>
         </FormControl>
     )
